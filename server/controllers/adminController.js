@@ -15,6 +15,9 @@ const adminLogin = async (req, res) => {
   }
 };
 
+// verify auth route controlling
+const verifyAuth = (req, res) =>
+  res.json({ status: "ok", admin: true, auth: true });
 // register car route controlling
 const registerCar = async (req, res) => {
   const carDetails = req.body;
@@ -32,4 +35,5 @@ const registerCar = async (req, res) => {
 module.exports = {
   adminLogin,
   registerCar,
+  verifyAuth,
 };

@@ -1,6 +1,7 @@
 // admin route helpers
 
 const carModel = require("../config/models/carModel");
+const jwt = require("jsonwebtoken");
 
 module.exports = {
   // admin login auth helper
@@ -10,7 +11,10 @@ module.exports = {
       const adminPassword = process.env.ADMIN_PASS;
 
       if (adminEmail === email && adminPassword === password) {
-        resolve({ status: "ok", admin: true });
+        const token = jwt.sign({ email }, process.env.JWT_ACCESS_SECRET, {
+          expiresIn: "30m",
+        });
+        resolve({ status: "ok", admin: true, token });
       } else {
         reject({ status: "error", admin: false });
       }

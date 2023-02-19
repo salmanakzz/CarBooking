@@ -3,18 +3,17 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Link2 from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { brands, locations } from "../../data";
 import { registerCar } from "../../api/registerCar";
+import { AdminContext } from "../../store/AdminContext";
 
 const theme = createTheme();
 
@@ -25,17 +24,40 @@ export const CarRegister = () => {
     formState: { errors },
   } = useForm();
 
+  const { setAuth, setToken } = React.useContext(AdminContext);
+  const navigate = useNavigate();
+
   const onSubmit = (data) => {
     if (data) {
       registerCar(data).then((res) => {
-        const { status, registered } = res;
         console.log(res);
       });
     }
   };
 
+  const handleLogout = () => {
+    function deleteCookie(name) {
+      document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+    }
+    deleteCookie("token");
+    setAuth(false);
+    setToken(false);
+    navigate("/admin");
+  };
+
   return (
     <ThemeProvider theme={theme}>
+      <div className="flex justify-end fixed right-5 top-3">
+        <Button
+          type="button"
+          variant="contained"
+          size="small"
+          sx={{ mt: 3, mb: 2 }}
+          onClick={handleLogout}
+        >
+          Logout
+        </Button>
+      </div>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -137,15 +159,6 @@ export const CarRegister = () => {
             >
               Register
             </Button>
-            <Grid container>
-              <Grid item>
-                <Link to="/">
-                  <Link2 variant="body2">
-                    {"Already have an account? Login"}
-                  </Link2>
-                </Link>
-              </Grid>
-            </Grid>
           </Box>
         </Box>
       </Container>

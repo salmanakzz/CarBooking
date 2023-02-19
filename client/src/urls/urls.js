@@ -8,3 +8,6 @@ export const registerCarUrl = "/admin/api/register-car"
 // user side urls
 export const fetchCarDetailsUrl = "/api/fetch-car-details"
 export const carBookUrl = "/api/car-book"
+
+//auth urls
+export const verifyAuthUrl = "/admin/api/verify-auth"

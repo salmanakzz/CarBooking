@@ -10,7 +10,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { adminLogin } from "../../api/adminLogin";
 
@@ -30,12 +30,13 @@ export const Login = () => {
   const onSubmit = (data) => {
     if (data) {
       adminLogin(data).then((res) => {
-        const {status , admin} = res
-        if (status === 'ok' && admin) {
-          navigate('/register-car')
-          return
+        const { status, admin, token } = res;
+        if (status === "ok" && admin) {
+          document.cookie = `token=${token}`;
+          navigate("/register-car");
+          return;
         }
-        setInvalid(true)
+        setInvalid(true);
       });
     }
   };
@@ -120,13 +121,6 @@ export const Login = () => {
             <Grid container>
               <Grid item xs>
                 <Link2 variant="body2">Forgot password?</Link2>
-              </Grid>
-              <Grid item>
-                <Link to="/signup">
-                  <Link2 variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link2>
-                </Link>
               </Grid>
             </Grid>
           </Box>

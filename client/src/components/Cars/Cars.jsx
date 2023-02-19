@@ -19,7 +19,6 @@ import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { fetchCarDetails } from "../../api/fetchCarDetails";
 import { Car } from "../Car/Car";
 import { locations } from "../../data";
-import { borderRadius } from "@mui/system";
 
 const theme = createTheme();
 
