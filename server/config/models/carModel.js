@@ -9,7 +9,7 @@ const car = new mongoose.Schema(
     brand: { type: String, required: true },
     segment: { type: String, required: true },
     location: { type: String, required: true },
-    booked: { type: Array },
+    booked: { type: Array, required: true },
   },
   {
     timestamps: true,
