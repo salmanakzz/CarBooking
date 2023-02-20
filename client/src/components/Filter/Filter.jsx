@@ -19,7 +19,7 @@ import { locations } from "../../data";
 
 const theme = createTheme();
 
-export const Filter = ({ filter, setCars }) => {
+export const Filter = ({ filter, setCars, admin, handleDownload }) => {
   const [location, setLocation] = useState(null);
   const [date, setDate] = useState(null);
 
@@ -41,7 +41,7 @@ export const Filter = ({ filter, setCars }) => {
   };
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs" className="!flex !bg-white ">
+      <Container component="main" maxWidth="xs" className="!flex !bg-white relative !z-10 justify-center">
         <CssBaseline />
         <Box
           sx={{
@@ -99,6 +99,16 @@ export const Filter = ({ filter, setCars }) => {
           >
             Filter
           </Button>
+          {admin && (
+            <Button
+              type="submit"
+              variant="contained"
+              sx={{ mt: 3, mb: 2,mr:1 }}
+              onClick={handleDownload}
+            >
+              Download CSV
+            </Button>
+          )}
         </Box>
       </Container>
     </ThemeProvider>

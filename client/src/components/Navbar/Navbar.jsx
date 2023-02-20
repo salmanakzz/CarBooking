@@ -18,7 +18,7 @@ export const Navbar = ({ page, admin }) => {
     navigate("/admin");
   };
   return (
-    <div className="flex justify-end">
+    <div className="flex justify-end relative !z-20">
       <div className="gap-4 justify-end flex fixed pr-[1.25rem] bg-[#f9f9f9] z-10 !w-[100%]">
         {admin ? page === "list" ? (
           <Button
