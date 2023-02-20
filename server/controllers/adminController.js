@@ -43,10 +43,23 @@ const deleteCar = async (req, res) => {
   }
 };
 
+//edit car details route controlling
+const editDetails = async (req, res) => {
+  const { id } = req.query;
+  try {
+    const response = await adminHelper.editCarDetails(id, req.body);
+    res.json(response);
+  } catch (error) {
+    console.log(error);
+    res.json(error);
+  }
+};
+
 // controllers exporting
 module.exports = {
   adminLogin,
   registerCar,
   verifyAuth,
   deleteCar,
+  editDetails,
 };

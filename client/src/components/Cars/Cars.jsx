@@ -7,6 +7,7 @@ import { Filter } from "../Filter/Filter";
 export const Cars = ({ admin }) => {
   const [cars, setCars] = useState(null);
   const [filter, setFilter] = useState(null);
+  const [edit, setEdit] = useState(false);
 
   useEffect(() => {
     fetchCarDetails().then((res) => {
@@ -16,7 +17,7 @@ export const Cars = ({ admin }) => {
       setCars(res.carDetails);
       setFilter(res.carDetails);
     });
-  }, []);
+  }, [edit]);
 
   return (
     <div>
@@ -25,7 +26,7 @@ export const Cars = ({ admin }) => {
       </div>
       <div className="gap-1 grid pt-[9.5rem] justify-center">
         {cars?.map((car) => (
-          <Car setCars={setCars} admin={admin} car={car} key={car._id} />
+          <Car setCars={setCars} admin={admin} car={car} key={car._id} setEdit={setEdit}/>
         ))}
       </div>
     </div>

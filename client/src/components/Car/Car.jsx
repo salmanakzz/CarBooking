@@ -14,10 +14,14 @@ import { carBook } from "../../api/carBook";
 import { useSnackbar } from "notistack";
 import { handleClickVariant } from "../Notification/Notification";
 import { deleteCarDetails } from "../../api/deleteCarDetails";
+import { EditModal } from "../Modal/Modal";
 
-export const Car = ({ car, admin, setCars }) => {
+export const Car = ({ car, admin, setCars, setEdit }) => {
   const { _id, name, brand, segment, location, booked, createdAt } = car;
   const [checkBooked, setCheckBooked] = useState(booked);
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -99,7 +103,7 @@ export const Car = ({ car, admin, setCars }) => {
               {admin && (
                 <TableCell>
                   <Button
-                    // onClick={() => handleEdit(_id)}
+                    onClick={handleOpen}
                     size="small"
                     variant="contained"
                     className="!mx-1"
@@ -121,6 +125,7 @@ export const Car = ({ car, admin, setCars }) => {
           </TableBody>
         </Table>
       </Paper>
+      <EditModal open={open} handleClose={handleClose} car={car} setEdit={setEdit}/>
     </Grid>
   );
 };

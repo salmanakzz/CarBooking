@@ -7,6 +7,7 @@ const {
   registerCar,
   verifyAuth,
   deleteCar,
+  editDetails,
 } = require("../controllers/adminController");
 const verifyJWT = require("../middlewares/verifyJwt");
 
@@ -18,6 +19,9 @@ router.get("/api/verify-auth", verifyJWT, verifyAuth);
 
 // register car details route
 router.post("/api/register-car", registerCar);
+
+// edit car detaisl route
+router.put("/api/edit-details", editDetails);
 
 // remove car detaisl route
 router.delete("/api/delete-car", deleteCar);

@@ -14,8 +14,6 @@ import { brands, locations } from "../../data";
 import { registerCar } from "../../api/registerCar";
 import { handleClickVariant } from "../Notification/Notification";
 import { useSnackbar } from "notistack";
-import { Navbar } from "../Navbar/Navbar";
-
 const theme = createTheme();
 
 export const CarRegister = () => {
@@ -48,7 +46,6 @@ export const CarRegister = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Navbar admin={true}/>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box

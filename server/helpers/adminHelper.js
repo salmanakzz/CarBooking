@@ -46,4 +46,17 @@ module.exports = {
       }
     });
   },
+
+  // edit car details helper
+  editCarDetails: (id, data) => {
+    console.log(id,data);
+    return new Promise(async (resolve, reject) => {
+      try {
+        await carModel.updateOne({ _id: ObjectId(id) }, { $set: data });
+        resolve({ status: "ok", edited: true });
+      } catch (error) {
+        reject({ status: "error", edited: false, error });
+      }
+    });
+  },
 };

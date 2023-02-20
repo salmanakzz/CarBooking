@@ -40,7 +40,7 @@ export const Navbar = ({ page, admin }) => {
           >
             Car list
           </Button>
-        ):<div className="!w-[100%]"></div>}
+        ):<div className="!w-[100%] !h-[70px]"></div>}
 
         {admin && (
           <Button
