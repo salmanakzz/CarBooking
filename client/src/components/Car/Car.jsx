@@ -11,16 +11,30 @@ import {
   Typography,
 } from "@mui/material";
 import { carBook } from "../../api/carBook";
+import { useSnackbar } from "notistack";
+import { handleClickVariant } from "../Notification/Notification";
 
 export const Car = ({ car }) => {
   const { _id, name, brand, segment, location, booked, createdAt } = car;
-  const [checkBooked,setCheckBooked] = useState(booked)
+  const [checkBooked, setCheckBooked] = useState(booked);
+
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleBook = (id) => {
-    setCheckBooked([true])
-    carBook(id).then((res)=>{
+    setCheckBooked([true]);
+    carBook(id).then((res) => {
       console.log(res);
-    })
+      const { status, booked } = res;
+      if (status === "ok" && booked) {
+        handleClickVariant(
+          "Car booked Successfully!",
+          "success",
+          enqueueSnackbar
+        );
+        return;
+      }
+      handleClickVariant("Something went wrong!", "error", enqueueSnackbar);
+    });
   };
   return (
     <Grid item xs={12}>

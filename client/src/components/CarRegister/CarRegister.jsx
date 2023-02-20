@@ -14,6 +14,8 @@ import { useForm } from "react-hook-form";
 import { brands, locations } from "../../data";
 import { registerCar } from "../../api/registerCar";
 import { AdminContext } from "../../store/AdminContext";
+import { handleClickVariant } from "../Notification/Notification";
+import { useSnackbar } from "notistack";
 
 const theme = createTheme();
 
@@ -27,10 +29,22 @@ export const CarRegister = () => {
   const { setAuth, setToken } = React.useContext(AdminContext);
   const navigate = useNavigate();
 
-  const onSubmit = (data) => {
+  const { enqueueSnackbar } = useSnackbar();
+
+  const onSubmit = (data,e) => {
     if (data) {
       registerCar(data).then((res) => {
-        console.log(res);
+        const { status, registered } = res;
+        if (status === "ok" && registered) {
+          handleClickVariant(
+            "Car registered Successfully!",
+            "success",
+            enqueueSnackbar
+          );
+          e.target.reset();
+          return;
+        }
+        handleClickVariant("Something went wrong!", "error", enqueueSnackbar);
       });
     }
   };
