@@ -6,6 +6,7 @@ const {
   adminLogin,
   registerCar,
   verifyAuth,
+  deleteCar,
 } = require("../controllers/adminController");
 const verifyJWT = require("../middlewares/verifyJwt");
 
@@ -15,7 +16,10 @@ router.post("/api/admin-login", adminLogin);
 // verify auth route
 router.get("/api/verify-auth", verifyJWT, verifyAuth);
 
-// register car route
+// register car details route
 router.post("/api/register-car", registerCar);
+
+// remove car detaisl route
+router.delete("/api/delete-car", deleteCar);
 
 module.exports = router;

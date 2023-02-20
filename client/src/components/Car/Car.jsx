@@ -13,8 +13,9 @@ import {
 import { carBook } from "../../api/carBook";
 import { useSnackbar } from "notistack";
 import { handleClickVariant } from "../Notification/Notification";
+import { deleteCarDetails } from "../../api/deleteCarDetails";
 
-export const Car = ({ car }) => {
+export const Car = ({ car, admin, setCars }) => {
   const { _id, name, brand, segment, location, booked, createdAt } = car;
   const [checkBooked, setCheckBooked] = useState(booked);
 
@@ -27,7 +28,23 @@ export const Car = ({ car }) => {
       const { status, booked } = res;
       if (status === "ok" && booked) {
         handleClickVariant(
-          "Car booked Successfully!",
+          "Car booked successfully!",
+          "success",
+          enqueueSnackbar
+        );
+        return;
+      }
+      handleClickVariant("Something went wrong!", "error", enqueueSnackbar);
+    });
+  };
+
+  const handleDelete = (id) => {
+    deleteCarDetails(id).then((res) => {
+      const { status, deleted } = res;
+      if (status === "ok" && deleted) {
+        setCars((cars) => cars.filter((c) => c._id !== id));
+        handleClickVariant(
+          "Car details removed successfully!",
           "success",
           enqueueSnackbar
         );
@@ -51,6 +68,9 @@ export const Car = ({ car }) => {
               <TableCell>Location</TableCell>
               <TableCell>Date</TableCell>
               <TableCell>Status</TableCell>
+              {admin && (
+                <TableCell className="!flex justify-center">Action</TableCell>
+              )}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -60,16 +80,43 @@ export const Car = ({ car }) => {
               <TableCell>{segment}</TableCell>
               <TableCell>{location}</TableCell>
               <TableCell>{createdAt}</TableCell>
-              <TableCell>
-                <Button
-                  onClick={() => handleBook(_id)}
-                  size="small"
-                  variant="contained"
-                  disabled={checkBooked?.length > 0 ? true : false}
-                >
+              {admin ? (
+                <TableCell>
                   {checkBooked?.length > 0 ? "Booked" : "Available"}
-                </Button>
-              </TableCell>
+                </TableCell>
+              ) : (
+                <TableCell>
+                  <Button
+                    onClick={() => handleBook(_id)}
+                    size="small"
+                    variant="contained"
+                    disabled={checkBooked?.length > 0 ? true : false}
+                  >
+                    {checkBooked?.length > 0 ? "Booked" : "Available"}
+                  </Button>
+                </TableCell>
+              )}
+              {admin && (
+                <TableCell>
+                  <Button
+                    // onClick={() => handleEdit(_id)}
+                    size="small"
+                    variant="contained"
+                    className="!mx-1"
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    color="error"
+                    onClick={() => handleDelete(_id)}
+                    size="small"
+                    variant="contained"
+                    className="!mx-1"
+                  >
+                    Delete
+                  </Button>
+                </TableCell>
+              )}
             </TableRow>
           </TableBody>
         </Table>

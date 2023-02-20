@@ -22,7 +22,7 @@ import { locations } from "../../data";
 
 const theme = createTheme();
 
-export const Cars = () => {
+export const Cars = ({ admin }) => {
   const [cars, setCars] = useState(null);
   const [filter, setFilter] = useState(null);
   const [location, setLocation] = useState(null);
@@ -73,8 +73,8 @@ export const Cars = () => {
                 justifyContent: "start",
                 position: "fixed",
                 gap: 1,
-                background:"white",
-                borderRadius:".2rem"
+                background: "white",
+                borderRadius: ".2rem",
               }}
             >
               <FormControl
@@ -106,7 +106,13 @@ export const Cars = () => {
                     inputFormat="MM/DD/YYYY"
                     value={date}
                     onChange={(e) => setDate(new Date(e).toLocaleDateString())}
-                    renderInput={(params) => <TextField size="small" className="!mb-[.0rem]" {...params} />}
+                    renderInput={(params) => (
+                      <TextField
+                        size="small"
+                        className="!mb-[.0rem]"
+                        {...params}
+                      />
+                    )}
                   />
                 </Stack>
               </LocalizationProvider>
@@ -125,7 +131,7 @@ export const Cars = () => {
       </div>
       <div className="gap-1 grid pt-[9.5rem] justify-center">
         {cars?.map((car) => (
-          <Car car={car} key={car._id} />
+          <Car setCars={setCars} admin={admin} car={car} key={car._id} />
         ))}
       </div>
     </div>

@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
-import { AddCarPage, AdminLoginPage, HomePage } from "./pages";
+import { AddCarPage, AdminLoginPage, CarListPage, HomePage } from "./pages";
 import { LoginCheck } from "./routes/LoginCheck";
 import { PrivateRoute } from "./routes/PrivateRoute";
 
@@ -14,6 +14,7 @@ function App() {
         </Route>
         <Route element={<PrivateRoute />}>
           <Route path="/register-car" element={<AddCarPage />} />
+          <Route path="/car-list" element={<CarListPage />} />
         </Route>
       </Routes>
     </Router>

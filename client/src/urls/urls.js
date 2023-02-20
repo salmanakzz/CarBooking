@@ -4,6 +4,7 @@
 // admin side urls
 export const adminLoginUrl = "/admin/api/admin-login"
 export const registerCarUrl = "/admin/api/register-car"
+export const deleteCarUrl = "/admin/api/delete-car"
 
 // user side urls
 export const fetchCarDetailsUrl = "/api/fetch-car-details"

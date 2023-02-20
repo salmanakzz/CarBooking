@@ -2,6 +2,7 @@
 
 const carModel = require("../config/models/carModel");
 const jwt = require("jsonwebtoken");
+const ObjectId = require("mongoose").Types.ObjectId;
 
 module.exports = {
   // admin login auth helper
@@ -30,6 +31,18 @@ module.exports = {
         resolve({ status: "ok", registered: true });
       } catch (error) {
         reject({ status: "error", registered: false, error });
+      }
+    });
+  },
+
+  // remove car details helper
+  removeCarDetails: (id) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        await carModel.deleteOne({ _id: ObjectId(id) });
+        resolve({ status: "ok", deleted: true });
+      } catch (error) {
+        reject({ status: "error", deleted: false, error });
       }
     });
   },

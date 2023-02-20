@@ -9,13 +9,12 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { brands, locations } from "../../data";
 import { registerCar } from "../../api/registerCar";
-import { AdminContext } from "../../store/AdminContext";
 import { handleClickVariant } from "../Notification/Notification";
 import { useSnackbar } from "notistack";
+import { Navbar } from "../Navbar/Navbar";
 
 const theme = createTheme();
 
@@ -23,15 +22,13 @@ export const CarRegister = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
-  const { setAuth, setToken } = React.useContext(AdminContext);
-  const navigate = useNavigate();
-
   const { enqueueSnackbar } = useSnackbar();
 
-  const onSubmit = (data,e) => {
+  const onSubmit = (data) => {
     if (data) {
       registerCar(data).then((res) => {
         const { status, registered } = res;
@@ -41,7 +38,7 @@ export const CarRegister = () => {
             "success",
             enqueueSnackbar
           );
-          e.target.reset();
+          reset();
           return;
         }
         handleClickVariant("Something went wrong!", "error", enqueueSnackbar);
@@ -49,29 +46,9 @@ export const CarRegister = () => {
     }
   };
 
-  const handleLogout = () => {
-    function deleteCookie(name) {
-      document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
-    }
-    deleteCookie("token");
-    setAuth(false);
-    setToken(false);
-    navigate("/admin");
-  };
-
   return (
     <ThemeProvider theme={theme}>
-      <div className="flex justify-end fixed right-5 top-3">
-        <Button
-          type="button"
-          variant="contained"
-          size="small"
-          sx={{ mt: 3, mb: 2 }}
-          onClick={handleLogout}
-        >
-          Logout
-        </Button>
-      </div>
+      <Navbar />
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box

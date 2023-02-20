@@ -31,9 +31,22 @@ const registerCar = async (req, res) => {
   }
 };
 
+// remove car details route controlling
+const deleteCar = async (req, res) => {
+  const { id } = req.query;
+  try {
+    const response = await adminHelper.removeCarDetails(id);
+    res.json(response);
+  } catch (error) {
+    console.log(error);
+    res.json(error);
+  }
+};
+
 // controllers exporting
 module.exports = {
   adminLogin,
   registerCar,
   verifyAuth,
+  deleteCar,
 };
