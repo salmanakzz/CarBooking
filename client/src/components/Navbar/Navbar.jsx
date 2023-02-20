@@ -3,7 +3,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { AdminContext } from "../../store/AdminContext";
 
-export const Navbar = ({ page }) => {
+export const Navbar = ({ page, admin }) => {
   const { setAuth, setToken } = React.useContext(AdminContext);
 
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ export const Navbar = ({ page }) => {
   return (
     <div className="flex justify-end">
       <div className="gap-4 justify-end flex fixed pr-[1.25rem] bg-[#f9f9f9] z-10 !w-[100%]">
-        {page === "list" ? (
+        {admin ? page === "list" ? (
           <Button
             type="button"
             variant="text"
@@ -40,17 +40,19 @@ export const Navbar = ({ page }) => {
           >
             Car list
           </Button>
-        )}
+        ):<div className="!w-[100%]"></div>}
 
-        <Button
-          type="button"
-          variant="contained"
-          size="small"
-          sx={{ mt: 3, mb: 2 }}
-          onClick={handleLogout}
-        >
-          Logout
-        </Button>
+        {admin && (
+          <Button
+            type="button"
+            variant="contained"
+            size="small"
+            sx={{ mt: 3, mb: 2 }}
+            onClick={handleLogout}
+          >
+            Logout
+          </Button>
+        )}
       </div>
     </div>
   );

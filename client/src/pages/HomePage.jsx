@@ -1,8 +1,13 @@
 // home page
 
 import React from "react";
-import { Cars } from "../components";
+import { Cars, Navbar } from "../components";
 
 export const HomePage = () => {
-  return <Cars />;
+  return (
+    <>
+      <Navbar />
+      <Cars />
+    </>
+  );
 };

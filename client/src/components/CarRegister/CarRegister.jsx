@@ -48,7 +48,7 @@ export const CarRegister = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Navbar />
+      <Navbar admin={true}/>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
